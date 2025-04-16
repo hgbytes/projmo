@@ -5,8 +5,9 @@ import random
 
 # Init
 pygame.init()
-width, height = 1000, 600
-screen = pygame.display.set_mode((width, height))
+WIDTH = 800  # Reduced from original size
+HEIGHT = 400  # Reduced from original size
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("✨ Projectile Motion Simulator ✨")
 font = pygame.font.SysFont("Arial", 20)
 
@@ -19,7 +20,8 @@ angle = 45
 velocity = 100
 gravity = 9.8
 scale = 0.3
-x0, y0 = 50, height - 50
+start_x = 50  # Keep this the same for left edge
+start_y = HEIGHT - 50  # Adjust based on new height
 time = 0
 dt = 0.1
 running = True
@@ -62,19 +64,19 @@ while running:
     # Init on reset
     if reset:
         angle_rad = math.radians(angle)
-        x = x0
-        y = y0
+        x = start_x
+        y = start_y
         reset = False
 
     # Motion
-    x = x0 + velocity * math.cos(angle_rad) * time
-    y = y0 - (velocity * math.sin(angle_rad) * time - 0.5 * gravity * time ** 2)
+    x = start_x + velocity * math.cos(angle_rad) * time
+    y = start_y - (velocity * math.sin(angle_rad) * time - 0.5 * gravity * time ** 2)
 
-    if y < height:
+    if y < HEIGHT:
         trajectory.append((int(x), int(y)))
 
     # Draw ball
-    if y < height:
+    if y < HEIGHT:
         pygame.draw.circle(screen, (255, 255, 255), (int(x), int(y)), 8)
 
     # Draw colorful trail
